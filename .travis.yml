@@ -13,7 +13,14 @@ deploy:
 #Roll out any terraform changes required
 - provider: script
   script: 
-    - ./terraform apply -auto-approve -var "variable=${env.aws_access_key}" "variable=${env.aws_secret_key}"
+    - ./terraform apply -auto-approve 
   skip_cleanup: true
   on:
     branch: master
+    
+ - provider: aws   
+   access_key_id: $aws_access_key
+  secret_access_key: $aws_secret_key
+  on:
+  branch: master
+  
