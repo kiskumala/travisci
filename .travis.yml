@@ -7,13 +7,13 @@ before_install:
 #These two steps will effectively validate our terraform and output a list of any changes to be made to our infrastructure
 script:
   - ./terraform init
-  - ./terraform plan
+  - ./terraform plan -var "variable=${env.aws_access_key}" "variable=${env.aws_secret_key}"
 
 deploy:
 #Roll out any terraform changes required
 - provider: script
   script: 
-    - ./terraform apply -auto-approve
+    - ./terraform apply -auto-approve -var "variable=${env.aws_access_key}" "variable=${env.aws_secret_key}"
   skip_cleanup: true
   on:
     branch: master
