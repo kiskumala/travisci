@@ -1,0 +1,16 @@
+language: generic
+
+before_install:
+  - wget https://releases.hashicorp.com/terraform/0.12.5/terraform_0.12.5_linux_amd64.zip
+  - unzip ./terraform_0.12.5_linux_amd64.zip -d /usr/local/bin/
+  
+script:
+  - terraform init./terraform 
+  - terraform plan ./terraform --var.tf main.tf
+
+deploy:
+ 	- provider: script
+ 	  skip_cleanup: true
+  	script: terraform apply ./terraform
+  	on:
+  	branch: master
